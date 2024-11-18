@@ -75,7 +75,8 @@ A continuación se muestra una captura de la página de la tienda:
 - **Captura de Pantalla**: (Si has subido una imagen al repositorio) Aquí puedes mostrar una imagen del proyecto en ejecución para darle más contexto a los visitantes del repositorio.
 
 ### Recuerda:
-- Cambia la URL de la imagen (`pantallazo_tienda.png`) a la que corresponda con tu archivo subido a GitHub.
+![Texto alternativo de la imagen](https://github.com/Deivincci/mondb/blob/main/pantallazo2.png?raw=true)
+
 - Si tienes otros detalles que añadir, como más funcionalidades o una guía sobre cómo usar tu aplicación, puedes expandir el archivo `README.md` con más secciones.
 
 ¡Espero que esto te ayude a estructurar bien tu `README.md`! Si necesitas más ayuda, no dudes en preguntar.
