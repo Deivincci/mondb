@@ -15,30 +15,30 @@ Configurar un entorno de desarrollo con **Node.js** y **MongoDB** para simular u
 
 1. Clona este repositorio a tu máquina local:
 
-   git clone https://github.com/Deivincci/tienda_en_linea.git
+   git clone https://github.com/Deivincci/mondb.git
 Instala las dependencias con npm:
 npm install
 
 Configura tu archivo .env con la URL de tu base de datos MongoDB:
-MONGODB_URI=mongodb://localhost:27017/tienda_en_linea
+MONGODB_URI=mongodb://localhost:27017/mondb
 
 Inicia el servidor:
-npm start
+node server.js
 
 Ejecución con Postman
 Para interactuar con la API, puedes usar Postman para hacer peticiones GET, POST, PUT y DELETE.
 
 GET: Obtener todos los productos.
 
-URL: http://localhost:3000/api/productos
+URL: http://localhost:3000/productos
 Método: GET
 GET: Obtener un producto por ID.
 
-URL: http://localhost:3000/api/productos/{id}
+URL: http://localhost:3000/productos/{id}
 Método: GET
 POST: Crear un nuevo producto.
 
-URL: http://localhost:3000/api/productos
+URL: http://localhost:3000/productos
 Método: POST
 Cuerpo de la petición (JSON):
 
@@ -49,7 +49,7 @@ Cuerpo de la petición (JSON):
 }
 PUT: Actualizar un producto existente.
 
-URL: http://localhost:3000/api/productos/{id}
+URL: http://localhost:3000/productos/{id}
 Método: PUT
 Cuerpo de la petición (JSON):
 
@@ -62,10 +62,8 @@ DELETE: Eliminar un producto.
 
 URL: http://localhost:3000/api/productos/{id}
 Método: DELETE
-Captura de Pantalla
-A continuación se muestra una captura de la página de la tienda:
 
-
+![Texto alternativo de la imagen](https://github.com/Deivincci/mondb/blob/main/pantallazo2.png?raw=true)
 
 ### Explicación de las secciones:
 - **Objetivo**: Se explica brevemente el propósito del proyecto.
@@ -74,10 +72,6 @@ A continuación se muestra una captura de la página de la tienda:
 - **Ejecución con Postman**: Detalles sobre cómo realizar peticiones usando Postman, incluyendo ejemplos de las rutas y el formato esperado de las peticiones.
 - **Captura de Pantalla**: (Si has subido una imagen al repositorio) Aquí puedes mostrar una imagen del proyecto en ejecución para darle más contexto a los visitantes del repositorio.
 
-### Recuerda:
-![Texto alternativo de la imagen](https://github.com/Deivincci/mondb/blob/main/pantallazo2.png?raw=true)
 
-- Si tienes otros detalles que añadir, como más funcionalidades o una guía sobre cómo usar tu aplicación, puedes expandir el archivo `README.md` con más secciones.
 
-¡Espero que esto te ayude a estructurar bien tu `README.md`! Si necesitas más ayuda, no dudes en preguntar.
 
