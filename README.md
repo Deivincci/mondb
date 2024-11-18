@@ -1,128 +1,82 @@
-Objetivo: Configurar un entorno de desarrollo en local con Node.js y MongoDB para una aplicación de “Tienda en Línea”
+# Proyecto Tienda en Línea con Node.js y MongoDB
 
-----------------------------------------------------------------------------------------------------------------------
+Este es un proyecto de ejemplo para configurar un entorno de desarrollo en local utilizando **Node.js** y **MongoDB**. Es una aplicación de "Tienda en Línea" que permite gestionar productos en una tienda.
 
-PARA ESTE PROYECTO NECESITAMOS NODE.JS Y MONGODB
-DEL SIGUIENTE ENLACE PODEMOS DESCARGAR Y INSTALAR NODE.JS
+## Objetivo
+Configurar un entorno de desarrollo con **Node.js** y **MongoDB** para simular una tienda en línea, permitiendo realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre los productos.
 
-https://nodejs.org/en
+## Funcionalidades
+- **GET**: Obtener todos los productos o un producto específico.
+- **POST**: Añadir un nuevo producto a la tienda.
+- **PUT**: Actualizar la información de un producto existente.
+- **DELETE**: Eliminar un producto de la tienda.
 
-EL SIGUIENTE ENLACE ES PARA DESCARGAR Y INSTALAR MONGODB
+## Instalación
 
-https://www.mongodb.com/try/download/community
+1. Clona este repositorio a tu máquina local:
 
-TIENES QUE SELECCIONAR 3 OPCIONES PARA QUE SEA EL INSTALADOR APROPIADO PARA TU PLATAFORMA
-POR LO GENERAL USUARIOS DE WINDOWS DEJARAN LA VERSION TAL Y COMO LA ENCUENTREN(SUELE SER LA MAS ACTUAL)
-PLATFORM ELEGIREMOS WINDOWS X64 (SUELE SER EL STANDARD MAS UTILIZADO)
-Y EN PACKAGE ELEGIREMOS MSI
-NOTA:CON TODO ESTO PODREMOS TRABAJAR DE MANERA LOCAL INCLUSO AUNQUE NOS QUEDEMOS SIN CONEXION A INTERNET,POR EL CONTRARIO TENGO QUE AÑADIR
-QUE EXISTE OTRA OPCION LLAMADA "MongoDB Atlas" ESTO ES IDEAL SINO QUIERES INSTALAR MONGODB Y QUIERES TRABAJAR CON SU BASE DE DATOS EN LA NUBE
-DURANTE AMBAS INSTALACIONES PARA TRABAJAR EN LOCAL NOS BASTA LA CONFIGURACION "DEFAULT" ASI QUE BASICAMENTE SERA CLICKAR NEXT HASTA FINALIZAR
-NOTA: MONGODB PUEDE TARDAR UNOS MINUTOS EN INSTALAR,LA INSTALACION SE ENCARGA DE EVALUAR LOS RECURSOS EN EL SISTEMA.
-------------------------------------------------------------------------------------------------------------------------
-UNA VEZ INSTALADOS TODOS LOS REQUISITOS PULSAMOS TECLA 
-WINDOWS + R,ABRIRA UN RECUADRO EJECUTAR,DENTRO ESCRIBIREMOS CMD Y PULSAREMOS ACEPTAR
-ESTO NOS ABRIRA UNA TERMINAL DESDE LA QUE COMENZAREMOS EL PROCESO
-------------------------------------------------------------------------------------------------------------------------
-CREAMOS LA CARPETA EN LA QUE TRABAJAREMOS
-mkdir mf0493_3_mongodb_david_moral
+   git clone https://github.com/Deivincci/tienda_en_linea.git
+Instala las dependencias con npm:
+npm install
 
-ACCEDEMOS A LA CARPETA QUE ACABAMOS DE CREAR
-cd mf0493_3_mongodb_david_moral
+Configura tu archivo .env con la URL de tu base de datos MongoDB:
+MONGODB_URI=mongodb://localhost:27017/tienda_en_linea
 
-INICIALIZAMOS EL PROYECTO CON NPM USANDO EL SIGUIENTE COMANDO
-npm init -y
+Inicia el servidor:
+npm start
 
-INSTALAMOS EXPRESS Y DEPENDENCIAS NECESARIAS PARA MONGODB
-npm install express mongoose body-parser
+Ejecución con Postman
+Para interactuar con la API, puedes usar Postman para hacer peticiones GET, POST, PUT y DELETE.
 
-express: Framework para crear aplicaciones en Node.js. |  mongoose: ODM (Object Data Modeling) para MongoDB, que facilita la interacción con la base de datos.
-body-parser: Middleware para analizar las solicitudes HTTP (específicamente para analizar datos JSON en el cuerpo de las solicitudes).
-------------------------------------------------------------------------------------------------------------------------
-EN LA CARPETA PRINCIPAL DEL PROYECTO,EN ESTE CASO mf0493_3_mongodb_david_moral CREAREMOS UN ARCHIVO server.js QUE ES EL QUE CONTENDRA LAS FUNCIONES NECESARIAS PARA SU FUNCIONAMIENTO
-ADJUNTO CODIGO
-------------------------------------------------------------------------------------------------------------------------
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const app = express();
-app.use(bodyParser.json());
+GET: Obtener todos los productos.
 
-// Conectar a MongoDB
-mongoose.connect('mongodb://localhost:27017/tienda-en-linea', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Conectado a MongoDB'))
-  .catch((err) => console.log('Error al conectar a MongoDB:', err));
+URL: http://localhost:3000/api/productos
+Método: GET
+GET: Obtener un producto por ID.
 
-// Definir el esquema del producto
-const productoSchema = new mongoose.Schema({
-  nombre: String,
-  precio: Number,
-  categoria: String,
-  descripcion: String
-});
+URL: http://localhost:3000/api/productos/{id}
+Método: GET
+POST: Crear un nuevo producto.
 
-// Crear el modelo para el producto
-const Producto = mongoose.model('Producto', productoSchema);
+URL: http://localhost:3000/api/productos
+Método: POST
+Cuerpo de la petición (JSON):
 
-// API para agregar productos
-app.post('/productos', (req, res) => {
-  const nuevoProducto = new Producto(req.body);
-  nuevoProducto.save()
-    .then((producto) => res.status(201).json(producto))
-    .catch((err) => res.status(400).json({ error: err.message }));
-});
-
-// API para ver los productos
-app.get('/productos', (req, res) => {
-  Producto.find()
-    .then((productos) => res.status(200).json(productos))
-    .catch((err) => res.status(500).json({ error: err.message }));
-});
-// Iniciar el servidor
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
-});
-
-------------------------------------------------------------------------------------------------------------------------
-A CONTINUACION VEMOS LA ESTRUCTURA QUE DEBE DE TENER EL PROYECTO
-
-				tienda-en-linea/
-				├── node_modules/
-				├── package.json
-				├── server.js
-				└── package-lock.json
-
-------------------------------------------------------------------------------------------------------------------------
-POR ULTIMO INICIAMOS EL SERVIDOR PARA PROBARLO
-node server.js
-------------------------------------------------------------------------------------------------------------------------
-AHORA MEDIANTE POSTMAN PODEMOS PROBAR SI FUNCIONA
-------------------------------------------------------------------------------------------------------------------------
-METODO POST (PARA AGREGAR PRODUCTOS)
-URL: http://localhost:3000/productos
-
-LA SIGUIENTE LINEA ES EL FORMATO QUE TENEMOS QUE INTRODUCIR,PRIMERO VEREMOS BODY,LO CLICKAMOS,DENTRO DE BOY VEREMOS LA OPCION RAW,AL ELEGIR RAW A LA DERECHA POR DEFECTO VEREMOS TEXT EN UN DESPLEGABLE,LO CAMBIAMOS POR JSON Body/raw/JSON
-VEREMOS TAMBIEN UN RECUADRO QUE ES DONDE TENDREMOS QUE ESCRIBIR LA OPERACION,PODEMOS SIMPLEMENTE COPIAR LO SIGUIENTE PARA LA PRUEBA
-------------------------------------------------------------------------------------------------------------------------
 {
-  "nombre": "Camiseta",
-  "precio": 15.99,
-  "categoria": "Ropa",
-  "descripcion": "Camiseta de algodón"
+  "nombre": "Producto de ejemplo",
+  "precio": 19.99,
+  "descripcion": "Descripción del producto"
 }
-------------------------------------------------------------------------------------------------------------------------
-PULSAMOS SEND
-SI TODO ESTA CORRECTO,EN LA PARTE INFERIOR VEREMOS UN RECUADRO CON 3 OPCIONES ,PRETTY|RAW|PREVIEW
-EN ALGUNOS CASOS ES POSIBLE QUE EN PRETTY NO SE VEA NADA,PODEMOS CAMBIAR A RAW POR EJEMPLO Y DEBERIAMOS VER ALGO SIMILAR A ESTO
-{"nombre":"Camiseta","precio":15.99,"categoria":"Ropa","descripcion":"Camiseta de algodón","_id":"67347f297485bfcd51b94887","__v":0}
-SI LO VEMOS ES QUE TODO HA FUNCIONADO CORRECTAMENTE
-------------------------------------------------------------------------------------------------------------------------
-Método: GET (PARA VER LOS PRODUCTOS)
-URL: http://localhost:3000/productos
-------------------------------------------------------------------------------------------------------------------------
+PUT: Actualizar un producto existente.
 
-PULSAMOS SEND
-Y YA DEBERIA MOSTRARNOS LOS PRODUCTOS
-LO VEREMOS DE LA MISMA MANERA QUE HEMOS CONFIRMADO EN EL PASO ANTERIOR QUE ESTABA CORRECTO
-------------------------------------------------------------------------------------------------------------------------
+URL: http://localhost:3000/api/productos/{id}
+Método: PUT
+Cuerpo de la petición (JSON):
+
+{
+  "nombre": "Producto actualizado",
+  "precio": 24.99,
+  "descripcion": "Descripción actualizada"
+}
+DELETE: Eliminar un producto.
+
+URL: http://localhost:3000/api/productos/{id}
+Método: DELETE
+Captura de Pantalla
+A continuación se muestra una captura de la página de la tienda:
+
+
+
+### Explicación de las secciones:
+- **Objetivo**: Se explica brevemente el propósito del proyecto.
+- **Funcionalidades**: Se mencionan las operaciones CRUD que puedes realizar a través de las rutas de la API.
+- **Instalación**: Guía paso a paso para instalar y configurar el entorno de desarrollo.
+- **Ejecución con Postman**: Detalles sobre cómo realizar peticiones usando Postman, incluyendo ejemplos de las rutas y el formato esperado de las peticiones.
+- **Captura de Pantalla**: (Si has subido una imagen al repositorio) Aquí puedes mostrar una imagen del proyecto en ejecución para darle más contexto a los visitantes del repositorio.
+
+### Recuerda:
+- Cambia la URL de la imagen (`pantallazo_tienda.png`) a la que corresponda con tu archivo subido a GitHub.
+- Si tienes otros detalles que añadir, como más funcionalidades o una guía sobre cómo usar tu aplicación, puedes expandir el archivo `README.md` con más secciones.
+
+¡Espero que esto te ayude a estructurar bien tu `README.md`! Si necesitas más ayuda, no dudes en preguntar.
+
